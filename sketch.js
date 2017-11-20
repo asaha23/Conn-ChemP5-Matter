@@ -29,23 +29,29 @@ img = loadImage('Water.png');
 
 
 function setup() {
+   frameRate(10);
   cnv = createCanvas(600, 600);
   cnv.position(width/2,0);
   
   //create an engine
   engine = Engine.create();
   world = engine.world;
-  world.gravity.y = 0;
+  world.gravity.y = 0.2;
   
   var gravityX = world.gravity.x;
 var gravityY = world.gravity.y;
   
   
   //add rectangles/floors
+  var params1 = {
+    isStatic: true,
+    restitution : 1.0
+    }
+  
   var params = {
     isStatic: true
     }
-     var ground = Bodies.rectangle(width / 2, height, width, 30, params);
+     var ground = Bodies.rectangle(width / 2, height, width, 30, params1);
      var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
      var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
      var top = Bodies.rectangle(width / 2, 0, width, 30, params);
@@ -59,7 +65,7 @@ var gravityY = world.gravity.y;
       offset : 0,
       mass : 18
       }
-    return Bodies.circle(x, y,22, params);
+    return Bodies.circle(x, y,20, params);
     this.x = x;
     this.y = y;
     
@@ -82,8 +88,7 @@ var gravityY = world.gravity.y;
  Heatslider = createSlider(-5,5,0);
  Heatslider.position(30,300);
  
- val = Heatslider.value();
- console.log(val);
+
  
 
  //value for heatslider
@@ -96,23 +101,24 @@ var gravityY = world.gravity.y;
  ResetButton.position(50,260);
  //ResetButton.mousePressed(resetSketch);
 
-  // add all of the bodies to the world
+ // add all of the bodies to the world
   World.add(world, stack);
   
-  //run the engine
- Engine.run(engine);
+ //run the engine
+ //Engine.run(engine);
 }
 
 
 
 //DRAW
 function draw() {
+  Engine.update(engine);
   background(51);
   //setgravity();
-  drawcircle();
+  //drawcircle();
   
   CalculateKE();
-  setgravity();
+  //setgravity();
   for (var i =0;i< bodies.length;i++){ 
    for (var j =0;j< bodies.length;j++){
    if(i != j){
@@ -120,10 +126,27 @@ function draw() {
   }
   }
   }
+  
+  //heat slider value
+ val = Heatslider.value();
+ console.log(val);
+ 
+ if(val > 0)
+ {
+ world.gravity.y = 0;
+ }
+ else if (val == 0)
+ {
+ world.gravity.y = 0.2;
+ applyforce(0);
+ }
+ else if (val < 0)
+ {
+ world.gravity.y = 0.2;
+ applyforce(0.0008);
+ }
 
-if (gcoll == 0) {
-applyforce(0.001); 
- } 
+
 //try block
 function applyforce(mag) {
 for ( var i = 0; i < bodies.length ; i++)
@@ -131,11 +154,14 @@ for ( var i = 0; i < bodies.length ; i++)
 for( var j = 0; j < bodies.length ; j++){
 var pvector = createVector((bodynumber[i].position.x),(bodynumber[i].position.y));
 var p2vector = createVector((bodynumber[j].position.x),(bodynumber[j].position.y));
+var distforce = dist(bodynumber[i].position.x, bodynumber[i].position.y ,bodynumber[j].position.x, bodynumber[j].position.y);
 var diffvector = p5.Vector.sub(pvector,p2vector);
 diffvector.normalize();
 diffvector.mult(mag);
 //line(diffvector);
+if(distforce != 30){
 Matter.Body.applyForce(bodynumber[j],p2vector,diffvector);
+}
 console.log(pvector,p2vector,diffvector,bodynumber[0]);
 
 }
@@ -149,13 +175,13 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  }
  
  function collides(circlebody){
- if ((circlebody.position.y + 22) >= (height - 20)){
+ if ((circlebody.position.y + 30) >= (height - 15)){
  gcoll += 1;
  if(val == 0){
  circlebody.velocity.y = -abs(circlebody.velocity.x);
  }
  else if(val > 0){
- circlebody.velocity.y = -1.75 * abs(circlebody.velocity.x);
+ circlebody.velocity.y = -2 * abs(circlebody.velocity.x);
  }
  else if (val <0){
  circlebody.velocity.y = -0.20 * abs(circlebody.velocity.x);
@@ -163,6 +189,18 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  console.log("groundcollide",gcoll);
  }
  }
+
+if (gcoll == 0) {
+applyforce(0.0008);
+var mag = 0.0008;
+}
+else
+{
+applyforce(0); 
+mag = 0;
+ } 
+ 
+ console.log("magnitude",mag);
 
   //text
   input.html(Heatslider.value());
@@ -175,14 +213,10 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
   rect((width/2) -300, height -15, width, 15);
 
   
-  //move bubbles to give vibrations
- for (var i = 0; i < bodies.length; i++) {
- bodynumber[i].position.x = bodynumber[i].position.x  + 0.25*random(-1,1);
- bodynumber[i].position.y = bodynumber[i].position.y  + 0.25*random(-1,1);
-                                         }
+
   
   //Gravity Adjustments
-function setgravity(){
+/*function setgravity(){
 if (systemtemp >= 100)  { // Gas case
 						world.gravity.y = 0;
 						world.gravity.x = 0;
@@ -196,14 +230,14 @@ else                    { // Liquid case
 						world.gravity.x = world.gravity.y * 0.6;
 					     }
 						 
-console.log("gravity",systemtemp);
-}
+console.log("gravity",systemtemp,world.gravity.y,world.gravity.x);
+}*/
   
   
 //check circle collision
 function intersects(first,other){
     var d = dist(first.position.x, first.position.y ,other.position.x, other.position.y);
-    if( d < 44) {
+    if( d <= 30) {
     first.velocity.x = -abs(first.velocity.x);
     first.velocity.y = -abs(first.velocity.y);
     other.velocity.x = -abs(other.velocity.x);
@@ -212,23 +246,40 @@ function intersects(first,other){
     console.log(test);
     }
     }
+
+//move bubbles to give vibrations
+for (var i = 0; i < bodies.length; i++) {
+bodynumber[i].position.x = bodynumber[i].position.x  + 0.50*random(-1,1);
+bodynumber[i].position.y = bodynumber[i].position.y  + 0.50*random(-1,1);
+                                         }
+   
+   
+   //move bubbles to give angular vibrations
+for (var i = 0; i < bodies.length; i++) {
+bodynumber[i].angularVelocity = bodynumber[i].angularVelocity  + 0.50*random(-1,1);
+                                         }                                      
+                                             
+    
+    
+ 
+ drawcircle();    
 }
 
  //draw function inside DRAW
  function drawcircle(){
   stroke(255);
-  strokeWeight(1);
+  strokeWeight(2);
   fill(255, 50);
   for (var i = 0; i < bodies.length; i++) {
     var circle = bodies[i];
     var pos = circle.position;
-    var r = 22;
+    var r = 20;
     var angle = circle.angle;
     push();
     translate(pos.x, pos.y);
     rotate(angle);
     //image(img,0,0);
-    ellipse(0, 0, 20, 20);
+    ellipse(0, 0, 30, 30);
     //line(0, 0, r, 0);
     pop();  
     }

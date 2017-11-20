@@ -10,7 +10,7 @@ function CalculateKE() {
  
  }
  var averageKE = TotalKE/20;
-systemtemp = ((averageKE*2*100)/(1.5*1.38*6.022)) - 19;
+systemtemp = ((averageKE*2*100)/(1.5*1.38*6.022)) - 19 ;
 //console.log("averageKE",systemtemp,averageKE);
 
 }
