@@ -11,6 +11,7 @@ var world;
 var bodies;
 var gcoll = 0;
 var canvas;
+var totalmol = 20;
 
 //body global variables 
 var bodynumber = [];
@@ -30,14 +31,14 @@ img = loadImage('Water.png');
 
 function setup() {
   imageMode(CENTER);
-   frameRate(10);
-  cnv = createCanvas(600, 600);
-  cnv.position(width/2,0);
+  frameRate(5);
+  cnv = createCanvas(600, window.innerHeight);
+  cnv.position((width/2)+50,0);
   
   //create an engine
   engine = Engine.create();
   world = engine.world;
-  world.gravity.y = 0.2;
+  world.gravity.y = 0.1;
   
   var gravityX = world.gravity.x;
 var gravityY = world.gravity.y;
@@ -53,9 +54,9 @@ var gravityY = world.gravity.y;
     isStatic: true
     }
      var ground = Bodies.rectangle(width / 2, height, width, 50, params1);
-     var wall1 = Bodies.rectangle(0, height / 2, 50, height, params);
-     var wall2 = Bodies.rectangle(width, height / 2, 50, height, params);
-     var top = Bodies.rectangle(width / 2, 0, width, 50, params);
+     var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
+     var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
+     var top = Bodies.rectangle(width / 2, 0, width, 30, params);
      World.add(world, [ground,wall1,wall2,top]);
 
   //add circle stack
@@ -66,7 +67,7 @@ var gravityY = world.gravity.y;
       offset : 0,
       mass : 18
       }
-    return Bodies.circle(x, y, 27, params);
+    return Bodies.circle(x, y, 20, params);
     this.x = x;
     this.y = y;
     
@@ -136,13 +137,13 @@ function draw() {
  }
  else if (val == 0)
  {
- world.gravity.y = 0.2;
+ world.gravity.y = 0.3;
  applyforce(0);
  }
  else if (val < 0)
  {
- world.gravity.y = 0.2;
- applyforce(0.0008);
+ world.gravity.y = 0.3;
+ applyforce(0.004);
  }
 
 
@@ -174,7 +175,7 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  }
  
  function collides(circlebody){
- if ((circlebody.position.y + 30) >= (height - 25)){
+ if ((circlebody.position.y + 30) >= (height - 35)){
  gcoll += 1;
  if(val == 0){
  circlebody.velocity.y = -abs(circlebody.velocity.x);
@@ -206,31 +207,28 @@ mag = 0;
   text(Heatslider.value(),40,500);
   
   //draw floor
-  stroke(0);
-  strokeWeight(1);
-  fill(255,50);
-  rect((width/2) -300, height -25, width, );
-
+  stroke(108,108,108);
+  strokeWeight(10);
+  fill(108,108,108);
+  rect((width/2)-300, height-25, width, 25 );
   
-
+  fill(108,108,108);
+  rect(0, 0, 15, height);
   
-  //Gravity Adjustments
-/*function setgravity(){
-if (systemtemp >= 100)  { // Gas case
-						world.gravity.y = 0;
-						world.gravity.x = 0;
-                         } 
-else if (systemtemp <= 0) { // Solid case
-						world.gravity.y = (100 - systemtemp) / (100 - 0);
-						world.gravity.x = world.gravity.y * 0.02;
-					      } 
-else                    { // Liquid case
-						world.gravity.y = (100 - systemtemp) / (100 - 0);
-						world.gravity.x = world.gravity.y * 0.6;
-					     }
-						 
-console.log("gravity",systemtemp,world.gravity.y,world.gravity.x);
-}*/
+  fill(108,108,108);
+  rect(width-15, 0	, 15, height);
+  
+  fill(108,108,108);
+  rect(0,0, width, 15 );
+
+/*
+ var ground = Bodies.rectangle(width / 2, height, width, 50, params1);
+     var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
+     var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
+     var top = Bodies.rectangle(width / 2, 0, width, 30, params);
+
+
+*/
   
   
 //check circle collision
@@ -247,18 +245,17 @@ function intersects(first,other){
     }
 
 //move bubbles to give vibrations
-for (var i = 0; i < bodies.length; i++) {
+/*for (var i = 0; i < bodies.length; i++) {
 bodynumber[i].position.x = bodynumber[i].position.x  + 0.35*random(-1,1);
 bodynumber[i].position.y = bodynumber[i].position.y  + 0.35*random(-1,1);
+                                         }*/
+   
+   for (var i = 0; i < bodies.length; i++) {
+   var positionvec = createVector((bodynumber[i].position.x),(bodynumber[i].position.y));
+   var v = createVector((0.02*random(-1,1)),(0.05*random(-1,1)));
+  Matter.Body.applyForce(bodynumber[i],positionvec,v);
                                          }
-   
-   
-   //move bubbles to give angular vibrations
-for (var i = 0; i < bodies.length; i++) {
-bodynumber[i].angularVelocity = bodynumber[i].angularVelocity  + 0.50*random(-1,1);
-                                         }                                      
-                                             
-    
+
     
  
  drawcircle();    
@@ -277,7 +274,7 @@ bodynumber[i].angularVelocity = bodynumber[i].angularVelocity  + 0.50*random(-1,
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    image(img,0,0,40,30);
+    image(img,0,0,40,28);
     //ellipse(0, 0, 30, 30);
     //line(0, 0, r, 0);
     pop();  

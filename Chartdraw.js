@@ -1,26 +1,3 @@
-<html>
-<head>
-  <meta charset="UTF-8">
-  <script language="javascript" type="text/javascript" src="p5.js"></script>
-  <script language="javascript" type="text/javascript" src="matter.js"></script>
-  <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
-  <script language="javascript" type="text/javascript" src="TotakKE.js"></script>
-  <!-- uncomment lines below to include extra p5 libraries -->
-  <!--<script language="javascript" src="libraries/p5.sound.js"></script>-->
-  <script language="javascript" type="text/javascript" src="sketch.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-</head>
-
-<body>
-<div id="container" style="position : absolute;left : 1000px ;width: 300px; height: 300px; margin: 0 auto"></div>
-<style>
-body {
-     background-color : #D3D3D3;
-}
-</style>
-<script>
 Highcharts.setOptions({
     global: {
         useUTC: false
@@ -39,14 +16,14 @@ Highcharts.chart('container', {
                 var series = this.series[0];
                 setInterval(function () {
                     var x = (new Date()).getTime(), // current time
-                        y = totalmol;
+                        y = Math.random();
                     series.addPoint([x, y], true, true);
                 }, 1000);
             }
         }
     },
     title: {
-        text: 'Output'
+        text: 'Live random data'
     },
     xAxis: {
         type: 'datetime',
@@ -78,7 +55,7 @@ Highcharts.chart('container', {
     series: [{
         name: 'Random data',
         data: (function () {
-// generate an array of random data
+            // generate an array of random data
             var data = [],
                 time = (new Date()).getTime(),
                 i;
@@ -93,7 +70,3 @@ Highcharts.chart('container', {
         }())
     }]
 });
-
-</script>
-</body>
-</html>
