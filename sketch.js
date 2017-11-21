@@ -23,12 +23,13 @@ var systemtemp;
 var val;
 
 //#IMAGE
-/*function preload(){
+function preload(){
 img = loadImage('Water.png');
-}*/
+}
 
 
 function setup() {
+  imageMode(CENTER);
    frameRate(10);
   cnv = createCanvas(600, 600);
   cnv.position(width/2,0);
@@ -51,10 +52,10 @@ var gravityY = world.gravity.y;
   var params = {
     isStatic: true
     }
-     var ground = Bodies.rectangle(width / 2, height, width, 30, params1);
-     var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
-     var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
-     var top = Bodies.rectangle(width / 2, 0, width, 30, params);
+     var ground = Bodies.rectangle(width / 2, height, width, 50, params1);
+     var wall1 = Bodies.rectangle(0, height / 2, 50, height, params);
+     var wall2 = Bodies.rectangle(width, height / 2, 50, height, params);
+     var top = Bodies.rectangle(width / 2, 0, width, 50, params);
      World.add(world, [ground,wall1,wall2,top]);
 
   //add circle stack
@@ -65,7 +66,7 @@ var gravityY = world.gravity.y;
       offset : 0,
       mass : 18
       }
-    return Bodies.circle(x, y,20, params);
+    return Bodies.circle(x, y, 27, params);
     this.x = x;
     this.y = y;
     
@@ -88,9 +89,6 @@ var gravityY = world.gravity.y;
  Heatslider = createSlider(-5,5,0);
  Heatslider.position(30,300);
  
-
- 
-
  //value for heatslider
  input = createInput(val);
  input.position(40,500);
@@ -131,6 +129,7 @@ function draw() {
  val = Heatslider.value();
  console.log(val);
  
+ //heatslider changes with value
  if(val > 0)
  {
  world.gravity.y = 0;
@@ -159,7 +158,7 @@ var diffvector = p5.Vector.sub(pvector,p2vector);
 diffvector.normalize();
 diffvector.mult(mag);
 //line(diffvector);
-if(distforce != 30){
+if(distforce > 40){
 Matter.Body.applyForce(bodynumber[j],p2vector,diffvector);
 }
 console.log(pvector,p2vector,diffvector,bodynumber[0]);
@@ -175,7 +174,7 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  }
  
  function collides(circlebody){
- if ((circlebody.position.y + 30) >= (height - 15)){
+ if ((circlebody.position.y + 30) >= (height - 25)){
  gcoll += 1;
  if(val == 0){
  circlebody.velocity.y = -abs(circlebody.velocity.x);
@@ -183,7 +182,7 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  else if(val > 0){
  circlebody.velocity.y = -2 * abs(circlebody.velocity.x);
  }
- else if (val <0){
+ else if (val < 0){
  circlebody.velocity.y = -0.20 * abs(circlebody.velocity.x);
  }
  console.log("groundcollide",gcoll);
@@ -210,7 +209,7 @@ mag = 0;
   stroke(0);
   strokeWeight(1);
   fill(255,50);
-  rect((width/2) -300, height -15, width, 15);
+  rect((width/2) -300, height -25, width, );
 
   
 
@@ -249,8 +248,8 @@ function intersects(first,other){
 
 //move bubbles to give vibrations
 for (var i = 0; i < bodies.length; i++) {
-bodynumber[i].position.x = bodynumber[i].position.x  + 0.50*random(-1,1);
-bodynumber[i].position.y = bodynumber[i].position.y  + 0.50*random(-1,1);
+bodynumber[i].position.x = bodynumber[i].position.x  + 0.35*random(-1,1);
+bodynumber[i].position.y = bodynumber[i].position.y  + 0.35*random(-1,1);
                                          }
    
    
@@ -278,8 +277,8 @@ bodynumber[i].angularVelocity = bodynumber[i].angularVelocity  + 0.50*random(-1,
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    //image(img,0,0);
-    ellipse(0, 0, 30, 30);
+    image(img,0,0,40,30);
+    //ellipse(0, 0, 30, 30);
     //line(0, 0, r, 0);
     pop();  
     }
