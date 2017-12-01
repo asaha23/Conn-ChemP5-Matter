@@ -24,11 +24,9 @@ var systemtemp;
 var val;
 var started = false;
 var molID = 1;
+var canvasHeight;
 
 //#IMAGE
-
-
-
 function preload(){
 if (molID == 1){
 img = loadImage('Water.png');
@@ -57,6 +55,7 @@ img = loadImage('SiliconDioxide.png');
 function setup() {
   imageMode(CENTER);
   frameRate(5);
+  canvasHeight = window.innerHeight;
   cnv = createCanvas(600, window.innerHeight);
   cnv.position((width/2)+50,0);
   
@@ -231,6 +230,38 @@ mag = 0;
   //text
   input.html(Heatslider.value());
   text(Heatslider.value(),40,500);
+  
+  if(Heatslider.value() == 0)
+  {
+  stroke('6c6c6c');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  if(Heatslider.value() == 1)
+  {
+  stroke('#ff4d4d');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  if(Heatslider.value() == 2)
+  {
+  stroke('#ff3333');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  if(Heatslider.value() == 3)
+  {
+  stroke('#ff1a1a');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  if(Heatslider.value() == 4)
+  {
+  stroke('#ff0000');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  if(Heatslider.value() == 5)
+  {
+  stroke('#b30000');
+  line(0,canvasHeight-30,600,canvasHeight-30);
+  }
+  
   
   //draw floor
   stroke(108,108,108);
