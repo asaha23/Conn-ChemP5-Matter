@@ -22,10 +22,35 @@ var mouseConstraint;
 var img;
 var systemtemp;
 var val;
+var started = false;
+var molID = 1;
 
 //#IMAGE
+
+
+
 function preload(){
+if (molID == 1){
 img = loadImage('Water.png');
+}
+else if (molID ==2){
+img = loadImage('HydrogenPeroxide.png');
+}
+else if (molID ==3){
+img = loadImage('Pentane.png');
+}
+else if (molID ==4){
+img = loadImage('Mercury.png');
+}
+else if (molID ==5){
+img = loadImage('Bromine.png');
+}
+else if (molID ==6){
+img = loadImage('Silver.png');
+}
+else if (molID ==7){
+img = loadImage('SiliconDioxide.png');
+}
 }
 
 
@@ -85,10 +110,9 @@ var gravityY = world.gravity.y;
   }
   
 
-
  //adding heat slider
  Heatslider = createSlider(-5,5,0);
- Heatslider.position(30,300);
+ Heatslider.position(100,600);
  
  //value for heatslider
  input = createInput(val);
@@ -96,8 +120,8 @@ var gravityY = world.gravity.y;
  
  
  //adding reset button
- ResetButton = createButton("Reset");
- ResetButton.position(50,260);
+ //ResetButton = createButton("Reset");
+ //ResetButton.position(50,260);
  //ResetButton.mousePressed(resetSketch);
 
  // add all of the bodies to the world
@@ -111,6 +135,8 @@ var gravityY = world.gravity.y;
 
 //DRAW
 function draw() {
+if(started){
+
   Engine.update(engine);
   background(51);
   //setgravity();
@@ -119,9 +145,9 @@ function draw() {
   CalculateKE();
   //setgravity();
   for (var i =0;i< bodies.length;i++){ 
-   for (var j =0;j< bodies.length;j++){
-   if(i != j){
-   var test = intersects(bodynumber[i],bodynumber[j]);
+  for (var j =0;j< bodies.length;j++){
+  if(i != j){
+  var test = intersects(bodynumber[i],bodynumber[j]);
   }
   }
   }
@@ -198,7 +224,7 @@ else
 {
 applyforce(0); 
 mag = 0;
- } 
+} 
  
  console.log("magnitude",mag);
 
@@ -226,8 +252,6 @@ mag = 0;
      var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
      var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
      var top = Bodies.rectangle(width / 2, 0, width, 30, params);
-
-
 */
   
   
@@ -251,15 +275,84 @@ bodynumber[i].position.y = bodynumber[i].position.y  + 0.35*random(-1,1);
                                          }*/
    
    for (var i = 0; i < bodies.length; i++) {
-   var positionvec = createVector((bodynumber[i].position.x),(bodynumber[i].position.y));
-   var v = createVector((0.02*random(-1,1)),(0.05*random(-1,1)));
+  var positionvec = createVector((bodynumber[i].position.x),(bodynumber[i].position.y));
+  var v = createVector((0.02*random(-1,1)),(0.05*random(-1,1)));
   Matter.Body.applyForce(bodynumber[i],positionvec,v);
                                          }
+  drawcircle();    
+   }
+  else 
+   {
+  drawinitialsetup();
+   }
+   }
 
+//reset function
+function myFunctionR(){
+engine.world.gravity.y = 0;
+var params1 = {
+    isStatic: true,
+    restitution : 1.0
+    }
+  
+  var params = {
+    isStatic: true
+    }
+     var ground = Bodies.rectangle(width / 2, height, width, 50, params1);
+     var wall1 = Bodies.rectangle(0, height / 2, 30, height, params);
+     var wall2 = Bodies.rectangle(width, height / 2, 30, height, params);
+     var top = Bodies.rectangle(width / 2, 0, width, 30, params);
+     World.add(world, [ground,wall1,wall2,top]);
+
+  //add circle stack
+  function makeCircle(x, y) {
+      var params = {
+      restitution: 1.0,
+      friction: 0,
+      offset : 0,
+      mass : 18
+      }
+    return Bodies.circle(x, y, 20, params);
+    this.x = x;
+    this.y = y;
     
- 
- drawcircle();    
+     }
+  
+  // x, y, columns, rows, column gap, row gap
+  var stack = Composites.stack(200,30, 5, 4, 0, 0, makeCircle);
+  bodies = stack.bodies;
+
+   //handle start button after reset
+  document.getElementById("start").innerHTML = "<b>START</b>"
+  started = true;
+
+  //restart timer
+  document.getElementById("timer").innerHTML = 00 + ":" + 00 + ":" + 00;
+  clearInterval(timerVar);
+  timerfunction();
 }
+
+//draw initial setup
+function drawinitialsetup(){
+background(51);
+drawcircle();
+//draw floor
+  stroke(108,108,108);
+  strokeWeight(10);
+  fill(108,108,108);
+  rect((width/2)-300, height-25, width, 25 );
+  
+  fill(108,108,108);
+  rect(0, 0, 15, height);
+  
+  fill(108,108,108);
+  rect(width-15, 0	, 15, height);
+  
+  fill(108,108,108);
+  rect(0,0, width, 15 );
+  }
+
+
 
  //draw function inside DRAW
  function drawcircle(){
@@ -275,7 +368,7 @@ bodynumber[i].position.y = bodynumber[i].position.y  + 0.35*random(-1,1);
     translate(pos.x, pos.y);
     rotate(angle);
     image(img,0,0,40,28);
-    //ellipse(0, 0, 30, 30);
+   // ellipse(0, 0, 30, 30);
     //line(0, 0, r, 0);
     pop();  
     }

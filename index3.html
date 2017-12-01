@@ -14,14 +14,15 @@
 <body>
 <div id="container" style="position : absolute;left : 1000px ;width: 300px; height: 300px; margin: 0 auto"></div>
 <div>
-<button id ="start" onclick="myFunctionS()" class ="button" style="position:absolute;left:150px;top:170px"><b>START</b></button>
+<button id ="start" onclick="myFunctionS()" class ="button" style="position:absolute;left:100px;top:170px"><b>START</b></button>
 </div>
 <div>
-<button onclick="myFunctionR()" class ="button" style="position:absolute;left:150px;top:350px"><b>RESET</b></button>
+<button onclick="myFunctionR()" class ="button" style="position:absolute;left:100px;top:350px"><b>RESET</b></button>
 </div>
 <div>
-<button onclick="myFunctionA()" class ="button" style="position:absolute;left:150px;top:260px"><b>ADD</b></button>
+<button onclick="myFunctionA()" class ="button" style="position:absolute;left:100px;top:260px"><b>ADD</b></button>
 </div>
+
 <div id="CompoundTable" style="position:absolute;left:1050px;top:550px;width:400px;height:20px">
 <table id="t01">
   <tr>
@@ -52,33 +53,6 @@ td {
  </div>
 
 <style>
-.btn-group button {
-    background-color: #D8D8D8; /* Green background */
-    border: 1px solid green; /* Green border */
-    color: black; /* White text */
-    padding: 10px 24px; /* Some padding */
-    cursor: pointer; /* Pointer/hand icon */
-    width: 8%; /* Set a width if needed */
-    display: block; /* Make the buttons appear below each other */
-}
-
-.btn-group button:not(:last-child) {
-    border-bottom: none; /* Prevent double borders */
-}
-
-/* Add a background color on hover */
-.btn-group button:hover 
-    
-    background-color: #3e8e41;
-}
-</style>
-<div class="btn-group">
-  <button style="position:absolute;left:20px;top:30px;">Values</button>
-  <button onclick ="SelectFunction1()" style="position:absolute;left:20px;top:65px;" title ="Water">1</button>
-</div>
-
-
-<style>
 .button {
     background-color: #696969;
     border: 10px outset grey;
@@ -101,14 +75,10 @@ body {
 }
 </style>
 <script>
-var timerVar
+
 
 //timer starts here
-timerfunction();
-
-
-function timerfunction(){
-timerVar = setInterval(countTimer, 1000);
+var timerVar = setInterval(countTimer, 1000);
 var totalSeconds = 0;
 function countTimer() {
    ++totalSeconds;
@@ -120,7 +90,7 @@ function countTimer() {
    document.getElementById("timer").style.color = "black";
    document.getElementById("timer").style.font = " bold 50px arial,serif";
    }
-}
+
 
 
 //the graph starts here
@@ -203,9 +173,6 @@ Highcharts.chart('container', {
 //function to start a draw
 function myFunctionS(){
    started = true;
-   for (var i = 0; i < 20 ; i++){
-   bodynumber[i].isSleeping = false;
-    }
    loop();
    var startvalue = document.getElementById("start").innerHTML;
    console.log(startvalue);
@@ -218,51 +185,16 @@ function myFunctionS(){
    {
    document.getElementById("start").innerHTML = stopb;
    }
-   else if(startvalue == stopb)
+   else
    {
-   for (var i = 0; i < 20 ; i++){
-   bodynumber[i].isSleeping = true;
-    }
    document.getElementById("start").innerHTML = startb;
-   
    }
 }
 
-
-//update chart on each molecule selection
-function SelectFunction1(){
-//myFunctionR(1);
-document.getElementById("MoleculeName").innerHTML = "Water";
-}
-function SelectFunction2(){
-//myFunctionR(2);
-document.getElementById("MoleculeName").innerHTML = "Hydrogen Peroxide";
-}
-function SelectFunction3(){
-//myFunctionR(3);
-document.getElementById("MoleculeName").innerHTML = "Pentane";
-}
-function SelectFunction4(){
-//myFunctionR(4);
-document.getElementById("MoleculeName").innerHTML = "Mercury";
-}
-function SelectFunction5(){
-//myFunctionR(5);
-document.getElementById("MoleculeName").innerHTML = "Bromine";
-}
-function SelectFunction6(){
-//myFunctionR(6);
-document.getElementById("MoleculeName").innerHTML = "Silver";
-}
-function SelectFunction7(){
-//smyFunctionR(7);
-document.getElementById("MoleculeName").innerHTML = "Silicon Dioxide";
-}
 
 
 </script>
 <div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b>
 <div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>
-
 </body>
 </html>
