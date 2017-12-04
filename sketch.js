@@ -27,7 +27,7 @@ var molID = 1;
 var canvasHeight;
 
 //#IMAGE
-function preload(){
+/*function preload(){
 if (molID == 1){
 img = loadImage('Water.png');
 }
@@ -49,7 +49,7 @@ img = loadImage('Silver.png');
 else if (molID ==7){
 img = loadImage('SiliconDioxide.png');
 }
-}
+}*/
 
 
 function setup() {
@@ -142,6 +142,7 @@ if(started){
   //drawcircle();
   
   CalculateKE();
+  //document.getElementById("temp").innerHTML = systemtemp;
   //setgravity();
   for (var i =0;i< bodies.length;i++){ 
   for (var j =0;j< bodies.length;j++){
@@ -398,8 +399,8 @@ drawcircle();
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    image(img,0,0,40,28);
-   // ellipse(0, 0, 30, 30);
+    //image(img,0,0,40,28);
+   ellipse(0, 0, 30, 30);
     //line(0, 0, r, 0);
     pop();  
     }
