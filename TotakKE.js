@@ -1,7 +1,5 @@
 function CalculateKE() {
- var Totalvel = [];
- var Ke = 0;
- var TotalKE =0;
+ 
  for(i = 0 ; i< 20 ; i++)
  { 
  Totalvel[i] = Math.sqrt((bodynumber[i].velocity.x)*(bodynumber[i].velocity.x) + (bodynumber[i].velocity.y)*(bodynumber[i].velocity.y));
@@ -10,9 +8,10 @@ function CalculateKE() {
  
  }
  var averageKE = TotalKE/20;
-systemtemp = ((averageKE*2*100)/(1.5*1.38*6.022)) - 19;
+systemtempp = ((averageKE*2*100)/(1.5*1.38*6.022));
+systemtemp = systemtempp/100;
 console.log("averageKE",systemtemp,averageKE);
-//document.getElementById("temp").innerHTML = systemtemp;
+document.getElementById("temperature").innerHTML = systemtemp;
 }
 
 

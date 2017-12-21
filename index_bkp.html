@@ -1,6 +1,6 @@
 <html>
 <head>
-<title id = "title"> Classifying Matter </title>
+<title id = "title"> Making Scientific Observations with a Model </title>
   <meta charset="UTF-8">
   <script language="javascript" type="text/javascript" src="p5.js"></script>
   <script language="javascript" type="text/javascript" src="matter.js"></script>
@@ -24,6 +24,7 @@
 <button onclick="myFunctionA()" class ="button" style="position:absolute;left:150px;top:260px"><b>ADD</b></button>
 </div>
 <div id="CompoundTable" style="position:absolute;left:1050px;top:550px;width:400px;height:20px">
+
 <table id="t01">
   <tr>
     <th>#</th>
@@ -52,7 +53,6 @@ td {
 </style>
  </div>
 
-
 <style>
 .btn-group button {
     background-color: #D8D8D8; /* Green background */
@@ -78,6 +78,9 @@ td {
   <button style="position:absolute;left:20px;top:30px;">Values</button>
   <button onclick ="SelectFunction1()" style="position:absolute;left:20px;top:65px;" title ="Water">1</button>
 </div>
+
+<div id="temp" style="position:absolute;left:1060px;top:700px;"><b><font color="Black">temperature</font></b>
+
 
 <style>
 .button {
@@ -117,7 +120,6 @@ function countTimer() {
    document.getElementById("timer").style.color = "black";
    document.getElementById("timer").style.font = " bold 50px arial,serif";
    }
-
 
 
 //the graph starts here
@@ -196,13 +198,14 @@ Highcharts.chart('container', {
 });
 
 
+
 //function to start a draw
 function myFunctionS(){
    started = true;
    for (var i = 0; i < 20 ; i++){
    bodynumber[i].isSleeping = false;
     }
-   //loop();
+   loop();
    var startvalue = document.getElementById("start").innerHTML;
    console.log(startvalue);
    //var startvalueb = startvalue.bold();
@@ -216,7 +219,7 @@ function myFunctionS(){
    }
    else if(startvalue == stopb)
    {
-   for (var i = 0; i < totlmolecules ; i++){
+   for (var i = 0; i < 20 ; i++){
    bodynumber[i].isSleeping = true;
     }
    document.getElementById("start").innerHTML = startb;
@@ -224,16 +227,42 @@ function myFunctionS(){
    }
 }
 
+
 //update chart on each molecule selection
 function SelectFunction1(){
-molID = 1;
-preload();
+//myFunctionR(1);
 document.getElementById("MoleculeName").innerHTML = "Water";
+}
+function SelectFunction2(){
+//myFunctionR(2);
+document.getElementById("MoleculeName").innerHTML = "Hydrogen Peroxide";
+}
+function SelectFunction3(){
+//myFunctionR(3);
+document.getElementById("MoleculeName").innerHTML = "Pentane";
+}
+function SelectFunction4(){
+//myFunctionR(4);
+document.getElementById("MoleculeName").innerHTML = "Mercury";
+}
+function SelectFunction5(){
+//myFunctionR(5);
+document.getElementById("MoleculeName").innerHTML = "Bromine";
+}
+function SelectFunction6(){
+//myFunctionR(6);
+document.getElementById("MoleculeName").innerHTML = "Silver";
+}
+function SelectFunction7(){
+//smyFunctionR(7);
+document.getElementById("MoleculeName").innerHTML = "Silicon Dioxide";
 }
 
 </script>
-<div id ="temperature" style="position:absolute;left:1060px;top:490px;">25&deg;C</div>
-<div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b>
-<div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>
+<div id ="temperature" style="position:absolute;left:1060px;top:490px;"> Temperature </div>
+<div id="timer" class="bordered" style="position:absolute;left:1060px;top:800px;"><b><font color="Black">0:0:0</font></b></div>
+<div class="bordered" id="timer" style="position:absolute;left:1060px;top:800px;"><b>0:0:0</b></div>
+
+
 </body>
 </html>

@@ -11,23 +11,53 @@ var world;
 var bodies;
 var gcoll = 0;
 var canvas;
+var pageTitle = document.getElementById("title").innerHTML;
+var totalRows;
 var totalmol = 20;
+var totlmolecules;
+
+if (pageTitle == "Physical Changes")
+{ 
+totalRows = 6;
+}
+else
+{
+totalRows = 4;
+}
+
+totlmolecules = totalRows*5;
 
 //body global variables 
 var bodynumber = [];
 var bodyPositionX = [];
 var bodyPositionY = [];
+var bodycolgrnd = [];
+var Totalvel = [];
+var Ke = 0;
+var TotalKE =0;
+var firstb;
+var secondb;
 var input;
+var test =[];
 var mouseConstraint;
 var img;
 var systemtemp;
 var val;
 var started = false;
 var molID = 1;
+var randomnum;
+if (pageTitle == "Chemical Changes")
+{ 
+molID = 2;
+}
+else
+{
+molID = 1;
+}
 var canvasHeight;
 
 //#IMAGE
-/*function preload(){
+function preload(){
 if (molID == 1){
 img = loadImage('Water.png');
 }
@@ -49,7 +79,7 @@ img = loadImage('Silver.png');
 else if (molID ==7){
 img = loadImage('SiliconDioxide.png');
 }
-}*/
+}
 
 
 function setup() {
@@ -65,7 +95,7 @@ function setup() {
   world.gravity.y = 0.1;
   
   var gravityX = world.gravity.x;
-var gravityY = world.gravity.y;
+  var gravityY = world.gravity.y;
   
   
   //add rectangles/floors
@@ -91,21 +121,20 @@ var gravityY = world.gravity.y;
       offset : 0,
       mass : 18
       }
-    return Bodies.circle(x, y, 20, params);
+    return Bodies.circle(x, y,20, params);
     this.x = x;
     this.y = y;
-    
-  }
+    }
   
   // x, y, columns, rows, column gap, row gap
-  var stack = Composites.stack(200,30, 5, 4, 0, 0, makeCircle);
+  var stack = Composites.stack(200,30, 5, totalRows, 0, 0, makeCircle);
   bodies = stack.bodies;
   
   for (var i = 0; i < bodies.length; i++){
   bodynumber[i] = stack.bodies[i];
   bodyPositionX[i] = stack.bodies[i].position.x;
   bodyPositionY[i] = stack.bodies[i].position.y;
-  console.log(bodynumber[i]);
+  //console.log(bodynumber[i]);
   }
   
 
@@ -116,12 +145,6 @@ var gravityY = world.gravity.y;
  //value for heatslider
  input = createInput(val);
  input.position(40,500);
- 
- 
- //adding reset button
- //ResetButton = createButton("Reset");
- //ResetButton.position(50,260);
- //ResetButton.mousePressed(resetSketch);
 
  // add all of the bodies to the world
   World.add(world, stack);
@@ -130,12 +153,11 @@ var gravityY = world.gravity.y;
  //Engine.run(engine);
 }
 
-
-
 //DRAW
 function draw() {
-if(started){
+//console.log("random",randomnum);
 
+if(started){
   Engine.update(engine);
   background(51);
   //setgravity();
@@ -144,17 +166,37 @@ if(started){
   CalculateKE();
   //document.getElementById("temp").innerHTML = systemtemp;
   //setgravity();
+  
   for (var i =0;i< bodies.length;i++){ 
   for (var j =0;j< bodies.length;j++){
   if(i != j){
-  var test = intersects(bodynumber[i],bodynumber[j]);
+  test = intersects(bodynumber[i],bodynumber[j]);
+  //var firstb = test.firstb;
+  //var secondb = test.secondb;
+  randomnum = Math.floor((Math.random() * 100) + 1);
+  if (test != undefined){
+  console.log("intersects",i,j);
+  if(val > 1 && randomnum > 90 )
+  {
+  Matter.Composite.remove(world, bodynumber[i]);
+  bodies.splice(i,1);
+  //bodies.splice(j,1);
+  //Matter.Composite.remove(world, bodynumber[j]);
+  //i--;
+  //j--;
+  test = [];
+  }
+  } 
+  //bodies.splice(i,1);
+  //bodies.splice(j,1);
+  //console.log("test",test);
   }
   }
   }
   
   //heat slider value
  val = Heatslider.value();
- console.log(val);
+ //console.log(val);
  
  //heatslider changes with value
  if(val > 0)
@@ -188,8 +230,7 @@ diffvector.mult(mag);
 if(distforce > 40){
 Matter.Body.applyForce(bodynumber[j],p2vector,diffvector);
 }
-console.log(pvector,p2vector,diffvector,bodynumber[0]);
-
+//console.log(pvector,p2vector,diffvector,bodynumber[0]);
 }
 }  
 }
@@ -198,23 +239,30 @@ console.log(pvector,p2vector,diffvector,bodynumber[0]);
  for ( i = 0; i < bodies.length ; i++)
  {
  collides(bodynumber[i]);
+
  }
  
  function collides(circlebody){
  if ((circlebody.position.y + 30) >= (height - 35)){
  gcoll += 1;
+ bodycolgrnd.push(circlebody);
+ Totalvel = Math.sqrt((circlebody.velocity.x)*(circlebody.velocity.x) + (circlebody.velocity.y)*(circlebody.velocity.y));
+ Ke =  0.5*18*2*Totalvel*Totalvel;
+ //console.log(bodycolgrnd.length,bodycolgrnd[0],Ke);
  if(val == 0){
  circlebody.velocity.y = -abs(circlebody.velocity.x);
  }
  else if(val > 0){
  circlebody.velocity.y = -2 * abs(circlebody.velocity.x);
+ Ke += Ke;
  }
  else if (val < 0){
- circlebody.velocity.y = -0.20 * abs(circlebody.velocity.x);
+ //circlebody.velocity.y = -0.20 * abs(circlebody.velocity.x);
+ Ke -= Ke;
  }
- console.log("groundcollide",gcoll);
  }
  }
+ 
 
 if (gcoll == 0) {
 applyforce(0.0008);
@@ -226,7 +274,7 @@ applyforce(0);
 mag = 0;
 } 
  
- console.log("magnitude",mag);
+ //console.log("magnitude",mag);
 
   //text
   input.html(Heatslider.value());
@@ -290,14 +338,13 @@ mag = 0;
 //check circle collision
 function intersects(first,other){
     var d = dist(first.position.x, first.position.y ,other.position.x, other.position.y);
-    if( d <= 30) {
+    if( d <= 40) {
     first.velocity.x = -abs(first.velocity.x);
     first.velocity.y = -abs(first.velocity.y);
     other.velocity.x = -abs(other.velocity.x);
     other.velocity.y = -abs(other.velocity.y);
-    var test = 1;
-    console.log(test);
-    }
+    return [first,other];
+     }
     }
 
 //move bubbles to give vibrations
@@ -306,7 +353,7 @@ bodynumber[i].position.x = bodynumber[i].position.x  + 0.35*random(-1,1);
 bodynumber[i].position.y = bodynumber[i].position.y  + 0.35*random(-1,1);
                                          }*/
    
-   for (var i = 0; i < bodies.length; i++) {
+for (var i = 0; i < bodies.length; i++) {
   var positionvec = createVector((bodynumber[i].position.x),(bodynumber[i].position.y));
   var v = createVector((0.02*random(-1,1)),(0.05*random(-1,1)));
   Matter.Body.applyForce(bodynumber[i],positionvec,v);
@@ -344,14 +391,14 @@ var params1 = {
       offset : 0,
       mass : 18
       }
-    return Bodies.circle(x, y, 20, params);
+    return Bodies.circle(x, y,totalmol, params);
     this.x = x;
     this.y = y;
     
      }
   
   // x, y, columns, rows, column gap, row gap
-  var stack = Composites.stack(200,30, 5, 4, 0, 0, makeCircle);
+  var stack = Composites.stack(200,30, 5, totalRows, 0, 0, makeCircle);
   bodies = stack.bodies;
 
    //handle start button after reset
@@ -399,8 +446,8 @@ drawcircle();
     push();
     translate(pos.x, pos.y);
     rotate(angle);
-    //image(img,0,0,40,28);
-   ellipse(0, 0, 30, 30);
+    image(img,0,0,40,28);
+    //ellipse(0, 0, 40, 40);
     //line(0, 0, r, 0);
     pop();  
     }
