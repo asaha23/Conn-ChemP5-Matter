@@ -101,7 +101,7 @@ img = loadImage('SiliconDioxide.png');
 
 function setup() {
   imageMode(CENTER);
-  frameRate(5);
+  frameRate(15);
   canvasHeight = window.innerHeight;
   cnv = createCanvas(600, window.innerHeight);
   cnv.position((width/2)+50,0);
@@ -178,8 +178,6 @@ function draw() {
   //setgravity();
   //drawcircle();
   
-  
-  
   for (var i =0;i< bodies.length;i++){ 
   for (var j =0;j< bodies.length;j++){
   if(i != j){
@@ -202,7 +200,7 @@ function draw() {
         test = [];
     }
     }
-  } 
+    } 
   
   
   }
@@ -211,21 +209,23 @@ function draw() {
   
 //heat slider value
  val = Heatslider.value();
+ var intValtemp = currRoomTemp;
  
 //heatslider changes with value
- if(val > 0)
+ if(intValtemp > 100)
  {
  world.gravity.y = 0;
  }
- else if (val == 0)
+ else if (intValtemp < 0)
  {
  world.gravity.y = 0.3;
- applyforce(0);
+ applyforce(0.005);
  }
- else if (val < 0)
+ else if (intValtemp < 100)
  {
  world.gravity.y = 0.3;
- applyforce(0.004);
+ applyforce(0.00005);
+ 
  }
 
 
