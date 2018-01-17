@@ -1,12 +1,11 @@
 <html>
 <head>
-<title id = "title">Physical Changes</title>
+<title id = "title"> Classifying Matter </title>
   <meta charset="UTF-8">
   <script language="javascript" type="text/javascript" src="p5.js"></script>
   <script language="javascript" type="text/javascript" src="matter.js"></script>
   <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
-  <script language="javascript" type="text/javascript" src="TotakKE.js">
-</script>
+  <script language="javascript" type="text/javascript" src="TotakKE.js"></script>
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -27,6 +26,7 @@
 <div>
 <button onclick="myFunctionA()" class ="button" style="position:absolute;left:150px;top:260px"><b>ADD</b></button>
 </div>
+
 <div id="CompoundTable" style="position:absolute;left:1050px;top:550px;width:400px;height:20px">
 <table id="t01">
   <tr>
@@ -56,6 +56,7 @@ td {
 </style>
  </div>
 
+
 <style>
 .btn-group button {
     background-color: #D8D8D8; /* Green background */
@@ -80,6 +81,12 @@ td {
 <div class="btn-group">
   <button style="position:absolute;left:20px;top:30px;">Values</button>
   <button onclick ="SelectFunction1()" style="position:absolute;left:20px;top:65px;" title ="Water">1</button>
+  <button onclick ="SelectFunction2()" style="position:absolute;left:20px;top:100px;" title ="Hydrogen Peroxide">2</button>
+  <button onclick ="SelectFunction3()" style="position:absolute;left:20px;top:135px;" title ="Pentane">3</button>
+  <button onclick ="SelectFunction4()" style="position:absolute;left:20px;top:170px;" title ="Mercury">4</button>
+  <button onclick ="SelectFunction5()" style="position:absolute;left:20px;top:205px;" title ="Bromine">5</button>
+  <button onclick ="SelectFunction6()" style="position:absolute;left:20px;top:240px;" title ="Silver">6</button>
+  <button onclick ="SelectFunction7()" style="position:absolute;left:20px;top:275px;" title ="Silicon Dioxide">7</button>
 </div>
 
 
@@ -106,16 +113,13 @@ body {
 }
 </style>
 <script>
-var timerVar
+
 
 //timer starts here
-timerfunction();
-
-
-function timerfunction(){
-timerVar = setInterval(countTimer, 1000);
+var timerVar = setInterval(countTimer, 1000);
 var totalSeconds = 0;
-function countTimer() {
+function countTimer() 
+   {
    ++totalSeconds;
    var hour = Math.floor(totalSeconds /3600);
    var minute = Math.floor((totalSeconds - hour*3600)/60);
@@ -125,12 +129,11 @@ function countTimer() {
    document.getElementById("timer").style.color = "black";
    document.getElementById("timer").style.font = " bold 50px arial,serif";
    }
-}
 
 
 //the graph starts here
 
-/*Highcharts.setOptions({
+Highcharts.setOptions({
     global: {
         useUTC: false
     }
@@ -202,13 +205,12 @@ Highcharts.chart('container', {
         }())
     }]
 });
-*/
 
 
 //function to start a draw
 function myFunctionS(){
    started = true;
-   for (var i = 0; i < totlmolecules ; i++){
+   for (var i = 0; i < 20 ; i++){
    bodynumber[i].isSleeping = false;
     }
    loop();
@@ -225,7 +227,7 @@ function myFunctionS(){
    }
    else if(startvalue == stopb)
    {
-   for (var i = 0; i < totlmolecules ; i++){
+   for (var i = 0; i < 20 ; i++){
    bodynumber[i].isSleeping = true;
     }
    document.getElementById("start").innerHTML = startb;
@@ -233,41 +235,48 @@ function myFunctionS(){
    }
 }
 
-
 //update chart on each molecule selection
 function SelectFunction1(){
-//myFunctionR(1);
+molID = 1;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Water";
 }
 function SelectFunction2(){
-//myFunctionR(2);
+molID = 2;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Hydrogen Peroxide";
 }
 function SelectFunction3(){
-//myFunctionR(3);
+molID = 3;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Pentane";
 }
 function SelectFunction4(){
-//myFunctionR(4);
+molID = 4;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Mercury";
 }
 function SelectFunction5(){
-//myFunctionR(5);
+molID = 5;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Bromine";
 }
 function SelectFunction6(){
-//myFunctionR(6);
+molID = 6;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Silver";
 }
 function SelectFunction7(){
-//smyFunctionR(7);
+molID = 7;
+preload();
 document.getElementById("MoleculeName").innerHTML = "Silicon Dioxide";
 }
 
-</script>
-<div id ="temperature" style="position:absolute;left:1060px;top:490px;">25&deg;C</div>
-<div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b>
-<div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>
 
+
+</script>
+<div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b></div>
+<!--<div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>-->
+<div id ="temperature" style="position:absolute;left:1060px;top:490px;">Temperature</div>
 </body>
 </html>

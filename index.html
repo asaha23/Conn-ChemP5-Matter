@@ -13,13 +13,17 @@
 </head>
 
 <body>
-<div id="container" style="position : absolute;left : 1000px ;width: 300px; height: 300px; margin: 0 auto"></div>
+    <div id="container" style="position : absolute;left : 1000px ;width: 300px; height: 300px; margin: 0 auto">
+        
+    </div>
+
 <div>
 <button id ="start" onclick="myFunctionS()" class ="button" style="position:absolute;left:150px;top:170px"><b>START</b></button>
 </div>
 <div>
 <button onclick="myFunctionR()" class ="button" style="position:absolute;left:150px;top:350px"><b>RESET</b></button>
 </div>
+<h1 id="sliderVal" style="position: absolute; left: 100px; top: 550px;"> 0 </h1>
 <div>
 <button onclick="myFunctionA()" class ="button" style="position:absolute;left:150px;top:260px"><b>ADD</b></button>
 </div>
@@ -216,10 +220,12 @@ function myFunctionS(){
    }
    else if(startvalue == stopb)
    {
-   for (var i = 0; i < totlmolecules ; i++){
-   bodynumber[i].isSleeping = true;
-    }
-   document.getElementById("start").innerHTML = startb;
+   		for (var i = 0; i < totlmolecules ; i++)
+   		{
+   			bodynumber[i].isSleeping = true;
+    	}
+    	
+   		document.getElementById("start").innerHTML = startb;
    
    }
 }
@@ -232,7 +238,9 @@ document.getElementById("MoleculeName").innerHTML = "Water";
 }
 
 </script>
-<div id ="temperature" style="position:absolute;left:1060px;top:490px;">25&deg;C</div>
+<div id="tempLabel" style="position:absolute;left:980px;top:490px;"> Temperature(&deg;C)</div>
+<div id ="temperature" style="position:absolute;left:1090px;top:490px;">25</div>
+<!--<div id ="temperature" style="position:absolute;left:1230px;top:490px;">&deg;C</div>-->
 <div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b>
 <div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>
 </body>
