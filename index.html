@@ -14,7 +14,7 @@
 
 <body>
     <div id="container" style="position : absolute;left : 1000px ;width: 300px; height: 300px; margin: 0 auto">
-        
+   
     </div>
 
 <div>
@@ -183,7 +183,7 @@ Highcharts.chart('container', {
     series: [{
         name: 'Random data',
         data: (function () {
-// generate an array of random data
+//generate an array of random data
             var data = [],
                 time = (new Date()).getTime(),
                 i;
@@ -240,8 +240,11 @@ document.getElementById("MoleculeName").innerHTML = "Water";
 </script>
 <div id="tempLabel" style="position:absolute;left:980px;top:490px;"> Temperature(&deg;C)</div>
 <div id ="temperature" style="position:absolute;left:1090px;top:490px;">25</div>
-<!--<div id ="temperature" style="position:absolute;left:1230px;top:490px;">&deg;C</div>-->
 <div id="timer" class="bordered" style="position:absolute;left:1060px;top:400px;"><b><font color="Black">0:0:0</font></b>
 <div class="bordered" id="timer" style="position:absolute;left:1060px;top:450px;"><b>0:0:0</b></div>
+<div>
+<input id = "volumeslider" oninput ="showValue2(this.value)" style = "position:absolute;left:1060px;top:600px" type="range">
+<div id = "range2" style="position:absolute;left:1000px;top:600px;">0</div>	
+</div>
 </body>
 </html>
