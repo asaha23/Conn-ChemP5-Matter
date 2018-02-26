@@ -1,0 +1,47 @@
+<!DOCTYPE.HTML>
+<html>
+<head>
+<script src="database.js"></script>
+<script src="compounds_elements.js"></script>
+
+Header
+</head>
+
+<body>
+<div id="output">Output not yet</div>
+<div id="output2">Output2 not yet</div>
+<script>
+var elements = database['elements'];
+var compounds_elements = database['compounds_elements'];
+var compounds_thermo = database['compounds_thermo'];
+var compounds = database['compounds'];
+var reaction_compounds = database['reaction_compounds'];
+var reaction_compounds = database['reaction_compounds'];
+var reactions = database['reactions'];
+ 
+
+console.log(compounds_elements[0].compound_id);
+console.log(compounds_thermo[0].state);
+console.log(compounds[0].formula);
+console.log(reaction_compounds[0].reaction_id);
+console.log(reactions[0].probability);
+
+
+for(i = 0 ; i < elements.length ; i++) //array to check each record in elements
+{
+if(elements[i].name == "Hydrogen")  //use case : print freezingPoint for Hydrogen
+{
+document.getElementById("output").innerHTML = elements[i].freezingPointKelvin;
+}
+}
+
+// printing 0th compound_id of compounds_elements
+var output2 = document.getElementById("output2");
+output2.innerHTML = compounds_elements[0].element_id;
+
+
+</script>
+
+
+</body>
+</html>
