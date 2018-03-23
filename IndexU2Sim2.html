@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css" rel="stylesheet">
+    
+    <title>Solubility</title>
+    <style type="text/css">
+      .toolbar{
+        background-color: #f1f1f1;
+        height: 15vh;
+        padding: 5px 5px 5px 5px;
+      }
+      .fa-home{
+        font-size: 63px
+      }
+      .column{
+        padding: 5px 5px 5px 5px;
+      }
+      .dropdown-menu{
+        width: 450px;
+      }
+      .dropdown-toggle{
+        width: 250px;
+      }
+      .dropdown{
+        margin-bottom: 5px;
+      }
+      #ex1Slider .slider-selection {
+        background: #BABABA;
+      }
+      .btn-number{
+        background-color: #218838;
+        color: #fff;
+        border-color: #1e7e34;
+      }
+      .badge-primary {
+        width: 70px;
+      }
+      .btn-play-pause-reset {
+        width: 84px;
+      }
+      .column-slider{
+        float: right;
+      }
+      .drawing-area{
+        height: 85vh;
+      }
+      .column-data{
+        width: 30vd;
+        margin-left: 15px;
+      }
+      .column-canvas{
+        width: 70vd;
+      }
+      .personalslider{
+        padding: 0px;
+      }
+      .btn-hide{
+        width: 250px;
+      }
+      .slider-val{
+        margin-left: 9px;
+      }
+      .slider-name{
+        margin-right: 9px;
+      }
+      .timerdiv{
+        width: 150px;
+        height: 38px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <div class="row toolbar">
+        <div class="column">
+          <a href="#" class="btn btn-success btn-lg">
+            <span class="fa fa-home"></span> 
+          </a>
+        </div>
+        <div class="column">
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Simulations
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu col-xs-12">
+              <li><a href="file:///Users/arpitasaha/Downloads/Shashank/indexU2.html">Sim1:Introduction to Solutions </a></li>
+              <li><a href="file:///Users/arpitasaha/Downloads/Shashank/IndexU2Sim2.html#">Sim2:Solubility </a></li>
+              <li><a href="#">Sim3:Solubility Changes </a></li>
+              <li><a href="#">Sim4:Saturation </a></li>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Set
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu col-xs-12">
+              <li><a href="#">Set 1</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="column">
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Substance
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu col-xs-12">
+              <li>
+                <img src="Water.png"> Water
+                <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="2" data-slider-value="2" data-slider-selection="before" data-slider-tooltip="hide" data-value="2" value="2" onchange="setAddMoleculeLabel()"/>
+                <span class="badge badge-primary slider-val" id="moleculeval">2 </span>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default btn-number" onclick="addMoleculesBtn()">
+                    <span class="fa fa-plus"></span>
+                   </button>
+                </span>
+              </li>
+              <li>
+                <img src="Silicon-Dioxide.png"> Silicon Dioxide
+                <input id="ex11" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="2" data-slider-value="2" data-slider-selection="before" data-slider-tooltip="hide" data-value="2" value="2" onchange="setAddMoleculeLabel()"/>
+                <span class="badge badge-primary slider-val" id="moleculevalSio">2 </span>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default btn-number" onclick="addMoleculesBtnSio()">
+                    <span class="fa fa-plus"></span>
+                   </button>
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-play-pause-reset" onclick="start()">
+              <span class="fa fa-play"></span>
+            </button>
+            <button type="button" class="btn btn-primary btn-play-pause-reset" onclick="pause()">
+              <span class="fa fa-pause"></span>
+            </button>
+            <button type="button" class="btn btn-primary btn-play-pause-reset" onclick="setup()">
+              <span class="fa fa-repeat"></span>
+            </button>
+          </div>
+        </div>
+        <div class="column">
+          <div> 
+            <button class="btn btn-primary btn-hide" type="button">Hide Water Molecules</button>
+          </div>
+          <div align="center">
+            <span class="badge badge-primary timerdiv" id="timer">0 : 00 : 00 </span>
+          </div>
+        </div>
+        <div class="column column-slider">
+          <div class="personalslider">
+            <span class="badge badge-primary slider-name">Speed </span>
+            <input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="1" data-toggle-slider-selection="before" data-slider-tooltip="hide" data-value="1" value="1" onchange="setSpeedSliderVal()"/>
+            <span class="badge badge-primary slider-val" id="speedValue">1 </span>
+          </div>
+          <div class="personalslider">
+            <span class="badge badge-primary slider-name">Volume</span>
+            <input id="ex3" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="9" data-slider-step="1" data-slider-value="5" data-slider-selection="before" data-slider-tooltip="hide"/>
+            <span class="badge badge-primary slider-val">0 </span>
+          </div>
+          <div class="personalslider">
+            <span class="badge badge-primary slider-name" id="heat">Pressure  </span>
+            <input id="ex4" data-slider-id='ex1Slider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="1" data-slider-value="0" data-slider-selection="before" data-slider-tooltip="hide" data-value="5" value="5" onchange="setHeatSliderVal()"/>
+            <span class="badge badge-primary slider-val" id="heatValue" >0</span>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="row drawing-area">
+        <div class="column column-data">
+            <canvas id="lineChart" height="270px" width="350px"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script language="javascript" type="text/javascript" src="p5.js"></script>
+    <script language="javascript" type="text/javascript" src="matter.js"></script>
+    <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
+    <script language="javascript" type="text/javascript" src="TotakKE.js"></script>
+    <script language="javascript" type="text/javascript" src="sketchU2Sim2.js"></script>
+    <script type="text/javascript">
+      var sliderAddMolecule = new Slider('#ex1', {
+        formatter: function(value) {
+        return 'Current value: ' + value;
+        }
+      });
+      var sliderAddMolecule = new Slider('#ex11', {
+        formatter: function(value) {
+        return 'Current value: ' + value;
+        }
+      });
+      var sliderSpeed = new Slider('#ex2', {
+        formatter: function(value) {
+        return 'Current value: ' + value;
+        }
+      });
+      var sliderVolume = new Slider('#ex3', {
+        formatter: function(value) {
+        return 'Current value: ' + value;
+        }
+      });
+      var sliderHeat = new Slider('#ex4', {
+        formatter: function(value) {
+        return 'Current value: ' + value;
+        }
+      });
+      
+    </script>
+  </body>
+</html>
